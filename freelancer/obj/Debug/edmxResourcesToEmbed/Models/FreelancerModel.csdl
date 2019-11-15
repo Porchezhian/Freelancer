@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FreeLancerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Domain">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Domain1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Vacany" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Freelancers" Relationship="Self.FK_dbo_Freelancers_dbo_Domains_Domain_Id" FromRole="Domains" ToRole="Freelancers" />
+  </EntityType>
+  <EntityType Name="Freelancer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SkillLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Hirer_Id" Type="Int32" />
+    <Property Name="Experience" Type="Int32" Nullable="false" />
+    <Property Name="Domains" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Technologies" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Domain_Id" Type="Int32" />
+    <NavigationProperty Name="Domain" Relationship="Self.FK_dbo_Freelancers_dbo_Domains_Domain_Id" FromRole="Freelancers" ToRole="Domains" />
+    <NavigationProperty Name="Hirer" Relationship="Self.FK_dbo_Freelancers_dbo_Hirers_Hirer_Id" FromRole="Freelancers" ToRole="Hirers" />
+  </EntityType>
+  <EntityType Name="Hirer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Freelancers" Relationship="Self.FK_dbo_Freelancers_dbo_Hirers_Hirer_Id" FromRole="Hirers" ToRole="Freelancers" />
+    <NavigationProperty Name="Selecteds" Relationship="Self.FK_dbo_Selecteds_dbo_Hirers_Hirer_Id" FromRole="Hirers" ToRole="Selecteds" />
+  </EntityType>
+  <EntityType Name="Selected">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MobileNumber" Type="Int32" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SkillLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Experience" Type="Int32" Nullable="false" />
+    <Property Name="Domains" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Technologies" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Salary" Type="Int32" Nullable="false" />
+    <Property Name="Hirer_Id" Type="Int32" />
+    <NavigationProperty Name="Hirer" Relationship="Self.FK_dbo_Selecteds_dbo_Hirers_Hirer_Id" FromRole="Selecteds" ToRole="Hirers" />
+  </EntityType>
+  <Association Name="FK_dbo_Freelancers_dbo_Domains_Domain_Id">
+    <End Role="Domains" Type="Self.Domain" Multiplicity="0..1" />
+    <End Role="Freelancers" Type="Self.Freelancer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domains">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Freelancers">
+        <PropertyRef Name="Domain_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Freelancers_dbo_Hirers_Hirer_Id">
+    <End Role="Hirers" Type="Self.Hirer" Multiplicity="0..1" />
+    <End Role="Freelancers" Type="Self.Freelancer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hirers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Freelancers">
+        <PropertyRef Name="Hirer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Selecteds_dbo_Hirers_Hirer_Id">
+    <End Role="Hirers" Type="Self.Hirer" Multiplicity="0..1" />
+    <End Role="Selecteds" Type="Self.Selected" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hirers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selecteds">
+        <PropertyRef Name="Hirer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FreeLancerDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Domains" EntityType="Self.Domain" />
+    <EntitySet Name="Freelancers" EntityType="Self.Freelancer" />
+    <EntitySet Name="Hirers" EntityType="Self.Hirer" />
+    <EntitySet Name="Selecteds" EntityType="Self.Selected" />
+    <AssociationSet Name="FK_dbo_Freelancers_dbo_Domains_Domain_Id" Association="Self.FK_dbo_Freelancers_dbo_Domains_Domain_Id">
+      <End Role="Domains" EntitySet="Domains" />
+      <End Role="Freelancers" EntitySet="Freelancers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Freelancers_dbo_Hirers_Hirer_Id" Association="Self.FK_dbo_Freelancers_dbo_Hirers_Hirer_Id">
+      <End Role="Hirers" EntitySet="Hirers" />
+      <End Role="Freelancers" EntitySet="Freelancers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Selecteds_dbo_Hirers_Hirer_Id" Association="Self.FK_dbo_Selecteds_dbo_Hirers_Hirer_Id">
+      <End Role="Hirers" EntitySet="Hirers" />
+      <End Role="Selecteds" EntitySet="Selecteds" />
+    </AssociationSet>
+    <EntitySet Name="tblUsers" EntityType="FreeLancerDBModel.tblUser" />
+  </EntityContainer>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Confirm" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

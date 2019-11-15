@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FreeLancerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Domains">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Domain" Type="nvarchar(max)" />
+    <Property Name="Vacany" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Freelancers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" />
+    <Property Name="MobileNumber" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="SkillLevel" Type="nvarchar(max)" />
+    <Property Name="Salary" Type="int" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="Hirer_Id" Type="int" />
+    <Property Name="Experience" Type="int" Nullable="false" />
+    <Property Name="Domains" Type="nvarchar(max)" />
+    <Property Name="Technologies" Type="nvarchar(max)" />
+    <Property Name="Domain_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="Hirers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" />
+    <Property Name="MobileNumber" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Selecteds">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" />
+    <Property Name="LastName" Type="nvarchar(max)" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar(max)" />
+    <Property Name="MobileNumber" Type="int" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Email" Type="nvarchar(max)" />
+    <Property Name="SkillLevel" Type="nvarchar(max)" />
+    <Property Name="Experience" Type="int" Nullable="false" />
+    <Property Name="Domains" Type="nvarchar(max)" />
+    <Property Name="Technologies" Type="nvarchar(max)" />
+    <Property Name="Salary" Type="int" Nullable="false" />
+    <Property Name="Hirer_Id" Type="int" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="20" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="Type" Type="varchar" MaxLength="20" />
+    <Property Name="Confirm" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK_dbo_Freelancers_dbo_Domains_Domain_Id">
+    <End Role="Domains" Type="Self.Domains" Multiplicity="0..1" />
+    <End Role="Freelancers" Type="Self.Freelancers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Domains">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Freelancers">
+        <PropertyRef Name="Domain_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Freelancers_dbo_Hirers_Hirer_Id">
+    <End Role="Hirers" Type="Self.Hirers" Multiplicity="0..1" />
+    <End Role="Freelancers" Type="Self.Freelancers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hirers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Freelancers">
+        <PropertyRef Name="Hirer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_Selecteds_dbo_Hirers_Hirer_Id">
+    <End Role="Hirers" Type="Self.Hirers" Multiplicity="0..1" />
+    <End Role="Selecteds" Type="Self.Selecteds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hirers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Selecteds">
+        <PropertyRef Name="Hirer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FreeLancerDBModelStoreContainer">
+    <EntitySet Name="Domains" EntityType="Self.Domains" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Freelancers" EntityType="Self.Freelancers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hirers" EntityType="Self.Hirers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Selecteds" EntityType="Self.Selecteds" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Freelancers_dbo_Domains_Domain_Id" Association="Self.FK_dbo_Freelancers_dbo_Domains_Domain_Id">
+      <End Role="Domains" EntitySet="Domains" />
+      <End Role="Freelancers" EntitySet="Freelancers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Freelancers_dbo_Hirers_Hirer_Id" Association="Self.FK_dbo_Freelancers_dbo_Hirers_Hirer_Id">
+      <End Role="Hirers" EntitySet="Hirers" />
+      <End Role="Freelancers" EntitySet="Freelancers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_Selecteds_dbo_Hirers_Hirer_Id" Association="Self.FK_dbo_Selecteds_dbo_Hirers_Hirer_Id">
+      <End Role="Hirers" EntitySet="Hirers" />
+      <End Role="Selecteds" EntitySet="Selecteds" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
